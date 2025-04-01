@@ -5,13 +5,14 @@ namespace Tests\Unit;
 use App\Models\Property;
 use App\Models\UtilityBill;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 
 class PropertyTest extends TestCase
 {
-    use RefreshDatabase;
+    // use RefreshDatabase;
+    use DatabaseTransactions;
 
     /** @test */
     public function it_has_fillable_attributes()
