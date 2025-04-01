@@ -1,5 +1,8 @@
 # Properties Management App - Backend Documentation
 
+![](https://github.com/Alkiyogoma/tasklist/blob/main/dashboard.png)
+
+
 ## Overview
 
 This repository contains two directory of the Laravel backend and Nextjs frontend for the Properties Management application. The backend provides API endpoints to manage users, properties, and utility bills, with authentication handled by Laravel Sanctum.
