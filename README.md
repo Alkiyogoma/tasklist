@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains the Laravel backend for the Properties Management application. The backend provides API endpoints to manage users, properties, and utility bills, with authentication handled by Laravel Sanctum.
+This repository contains two directory of the Laravel backend and Nextjs frontend for the Properties Management application. The backend provides API endpoints to manage users, properties, and utility bills, with authentication handled by Laravel Sanctum.
 
 ## Tech Stack
 
@@ -50,8 +50,7 @@ This application follows the MVC (Model-View-Controller) architecture with addit
    - `bill_type` - Type of utility (water, electricity, gas, internet, etc.)
    - `amount` - Bill amount
    - `bill_date` - Date the bill was issued
-     - `user_id` - Foreign key to users table (current user, nullable)
-   - `paid_date` - Date the bill was paid (nullable)
+   - `user_id` - Foreign key to users table (current user)
    - `created_at` - Timestamp for record creation
    - `updated_at` - Timestamp for record updates
 
@@ -173,7 +172,7 @@ This application follows the MVC (Model-View-Controller) architecture with addit
 2. Set the base URL in your environment:
    ```
    NEXT_PUBLIC_API_URL=http://localhost:8000/api
-   NEXT_BACKEND_API_URL=http://localhost:8000
+   NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
    ```
 3. Configure your Next.js app to send credentials with requests:
 
