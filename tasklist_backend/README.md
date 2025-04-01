@@ -253,3 +253,131 @@ If authentication is not working properly:
 1. Ensure the Sanctum middleware is properly set up in your routes file
 2. Check that your frontend is sending the CSRF token with requests
 3. Verify that cookies are being properly set and sent
+
+# Project Tests Documentation
+
+This documentation provides an overview of the unit tests created for the Property and UtilityBill models in our Laravel application.
+
+## Overview
+
+These tests ensure that our models function correctly, validating:
+
+-   Model attributes and fillable properties
+-   UUID generation via the HasUuid trait
+-   Relationship definitions
+-   Attribute casting
+-   Database interactions
+
+## Test Structure
+
+### Property Model Tests
+
+The `PropertyTest` class tests the core functionality of the Property model:
+
+```php
+// Tests\Unit\PropertyTest
+```
+
+#### Test Cases:
+
+1. **Fillable Attributes Test**
+
+    - Verifies that only the expected fields can be mass-assigned
+    - Fields tested: 'name', 'address', 'type'
+
+2. **UUID Generation Test**
+
+    - Confirms the HasUuid trait properly generates a UUID
+    - Verifies that models have both an auto-incrementing ID and a UUID field
+
+3. **Relationship Test**
+    - Validates that a Property can have multiple UtilityBill records
+    - Confirms the hasMany relationship returns the correct collection type
+
+### UtilityBill Model Tests
+
+The `UtilityBillTest` class tests the UtilityBill model functionality:
+
+```php
+// Tests\Unit\UtilityBillTest
+```
+
+#### Test Cases:
+
+1. **Fillable Attributes Test**
+
+    - Verifies that only the expected fields can be mass-assigned
+    - Fields tested: 'property_id', 'type', 'amount', 'bill_date', 'user_id'
+
+2. **UUID Generation Test**
+
+    - Confirms the HasUuid trait properly generates a UUID
+    - Verifies that models have both an auto-incrementing ID and a UUID field
+
+3. **Attribute Casting Test**
+
+    - Validates that 'bill_date' is properly cast to a Carbon date object
+    - Confirms that 'amount' is correctly cast to a decimal with 2 places
+
+4. **Property Relationship Test**
+
+    - Verifies the belongsTo relationship with the Property model
+
+5. **User Relationship Test**
+    - Validates the belongsTo relationship with the User model
+
+## Database Structure
+
+The tests accommodate a database structure where models have:
+
+-   An auto-incrementing `id` column (primary key)
+-   A `uuid` column containing a UUID string
+-   Standard foreign keys that use the numeric `id` field
+
+## Running the Tests
+
+To run these tests:
+
+```bash
+# Run all tests
+php artisan test
+
+# Run specific test class
+php artisan test --filter PropertyTest
+php artisan test --filter UtilityBillTest
+```
+
+## Test Requirements
+
+These tests require:
+
+1. The RefreshDatabase trait to reset the database between tests
+2. Property and UtilityBill models with HasUuid trait
+3. A User model with factory support
+4. Proper database migrations for all involved tables
+
+## Best Practices Demonstrated
+
+1. **Isolated Tests**: Each test focuses on a single aspect of functionality
+2. **Comprehensive Coverage**: Tests all important model features
+3. **Clear Assertions**: Each test has specific, readable assertions
+4. **Database Reset**: Uses RefreshDatabase to maintain a clean testing environment
+5. **Relationship Validation**: Confirms both sides of model relationships
+
+## Extending These Tests
+
+When adding new functionality to these models, extend these tests by:
+
+1. Creating a new test method for each new feature
+2. Following the naming convention `it_does_something()`
+3. Creating minimal test data to verify the specific functionality
+4. Adding clear assertions that validate expected outcomes
+
+## Troubleshooting
+
+If tests fail, common issues include:
+
+-   Missing database columns in migrations
+-   Incorrect relationship definitions in models
+-   Improperly configured HasUuid trait
+-   Missing factory definitions for User model
