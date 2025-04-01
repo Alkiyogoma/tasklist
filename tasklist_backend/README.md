@@ -1,64 +1,255 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
-
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
 ## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Properties Management App - Backend Documentation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Overview
 
-## Learning Laravel
+This repository contains the Laravel backend for the Properties Management application. The backend provides API endpoints to manage users, properties, and utility bills, with authentication handled by Laravel Sanctum.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Tech Stack
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   **Backend Framework**: Laravel
+-   **Authentication**: Laravel Sanctum
+-   **Database**: MySQL/PostgreSQL
+-   **Frontend**: Next.js (separate repository)
 
-## Laravel Sponsors
+## Architecture
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+This application follows the MVC (Model-View-Controller) architecture with additional emphasis on:
 
-### Premium Partners
+-   **Dependency Injection**: Services and repositories are injected where needed
+-   **Interface Segregation**: Interfaces are used to define contracts for implementation
+-   **Repository Pattern**: Database operations are abstracted into repository classes
+-   **Service Layer**: Business logic is contained in service classes
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Database Schema
 
-## Contributing
+### Tables
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. **users**
 
-## Code of Conduct
+    - `id` - Primary key
+    - `name` - User's full name
+    - `email` - User's email address (unique)
+    - `password` - Hashed password
+    - `email_verified_at` - Timestamp for email verification
+    - `remember_token` - For "remember me" functionality
+    - `created_at` - Timestamp for record creation
+    - `updated_at` - Timestamp for record updates
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. **properties**
 
-## Security Vulnerabilities
+    - `id` - Primary key
+    - `name` - Property name
+    - `address` - Property address
+    - `type` - Property type (apartment, house, commercial, etc.)
+    - `created_at` - Timestamp for record creation
+    - `updated_at` - Timestamp for record updates
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3. **utility_bills**
+    - `id` - Primary key
+    - `property_id` - Foreign key to properties table
+    - `bill_type` - Type of utility (water, electricity, gas, internet, etc.)
+    - `amount` - Bill amount
+    - `bill_date` - Date the bill was issued
+        - `user_id` - Foreign key to users table (current user, nullable)
+    - `paid_date` - Date the bill was paid (nullable)
+    - `created_at` - Timestamp for record creation
+    - `updated_at` - Timestamp for record updates
 
-## License
+### Relationships
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-   A user can add multiple utility bills (one-to-many)
+-   A property can have multiple utility bills (one-to-many)
+
+## API Endpoints
+
+### Authentication
+
+-   `POST /api/register` - Register a new user
+-   `POST /api/login` - Login and get auth token
+-   `POST /api/logout` - Logout and invalidate token
+-   `GET /api/user` - Get authenticated user details
+
+### Properties
+
+-   `GET /api/properties` - List all properties (with filtering options)
+-   `GET /api/properties/{id}` - Get a specific property details
+-   `POST /api/properties` - Create a new property
+-   `PUT /api/properties/{id}` - Update property details
+-   `DELETE /api/properties/{id}` - Delete a property
+
+### Utility Bills
+
+-   `GET /api/properties/{property_id}/utility-bills` - List all utility bills for a property
+-   `GET /api/utility-bills/{id}` - Get specific utility bill details
+-   `POST /api/utility-bills` - Create a new utility bill
+-   `PUT /api/utility-bills/{id}` - Update utility bill details
+-   `DELETE /api/utility-bills/{id}` - Delete a utility bill
+
+## Setup Instructions
+
+### Prerequisites
+
+-   PHP >= 8.1
+-   Composer
+-   MySQL or PostgreSQL
+-   Node.js >= 16.x (for the frontend)
+
+### Installation
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/Alkiyogoma/tasklist.git
+    cd tasklist_backend
+    ```
+
+2. Install PHP dependencies:
+
+    ```bash
+    composer install
+    ```
+
+3. Create environment file:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+4. Configure your database in the `.env` file:
+
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=properties_management
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
+
+5. Generate application key:
+
+    ```bash
+    php artisan key:generate
+    ```
+
+6. Run database migrations:
+
+    ```bash
+    php artisan migrate
+    ```
+
+7. Seed the database with test data (optional):
+
+    ```bash
+    php artisan db:seed
+    ```
+
+8. Configure Sanctum:
+
+    ```bash
+    php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+    ```
+
+9. Update CORS in `config/cors.php` to allow requests from your frontend:
+
+    ```php
+     'paths' => ['api/*', 'sanctum/csrf-cookie'],
+     'allowed_methods' => ['*'],
+     'allowed_origins' => ['http://localhost:3000'],
+     'allowed_headers' => ['*'],
+     'exposed_headers' => [],
+     'max_age' => 0,
+     'supports_credentials' => true,
+    ```
+
+10. Start the development server:
+    ```bash
+    php artisan serve
+    ```
+
+### Connecting Next.js Frontend
+
+1. In your Next.js project, install axios or use fetch for API calls
+2. Set the base URL in your environment:
+    ```
+    NEXT_PUBLIC_API_URL=http://localhost:8000/api
+    NEXT_BACKEND_API_URL=http://localhost:8000
+    ```
+3. Configure your Next.js app to send credentials with requests:
+
+    ```javascript
+    // With axios
+    axios.defaults.withCredentials = true;
+
+    // With fetch
+    fetch(url, {
+        credentials: "include",
+        // other options
+    });
+    ```
+
+## Important Decisions and Assumptions
+
+### Authentication Strategy
+
+-   We've chosen Laravel Sanctum over JWT because:
+    -   Sanctum provides a simpler implementation for SPA authentication
+    -   It supports both token-based API and session-based authentication
+    -   It fits well with Next.js frontend which can maintain cookies
+
+### OOP Implementation
+
+-   **Repository Pattern**: All database operations are abstracted into repository classes to decouple the data access layer from business logic
+-   **Service Layer**: Business logic is contained in service classes that depend on repositories
+-   **Dependency Injection**: Services and repositories are injected via constructor injection
+-   **Interfaces**: Each repository and service implements an interface to allow for easy swapping of implementations
+
+### Validation
+
+-   All input validation is handled at the controller level using Laravel's built-in validation
+-   Custom validation rules are implemented for specific business requirements
+
+### Error Handling
+
+-   API returns consistent error formats with appropriate HTTP status codes
+-   Custom exception handlers are implemented to convert exceptions to API responses
+
+### Authorization
+
+-   Policy classes are used to define who can perform what actions on which resources
+-   Authorization checks are performed at the controller level
+
+### Performance Considerations
+
+-   Eager loading is used to prevent N+1 query problems
+-   API resources are used to transform models to JSON responses
+-   Caching is implemented for frequently accessed resources
+
+## Future Enhancements
+
+-   Implement notifications for rent and utility bill due dates
+-   Add reporting and analytics features
+-   Implement file uploads for property images and documents
+-   Add maintenance request functionality
+
+## Troubleshooting
+
+### CORS Issues
+
+If you're experiencing CORS issues when connecting your Next.js frontend:
+
+1. Ensure your frontend URL is listed in the `allowed_origins` array in `config/cors.php`
+2. Make sure `supports_credentials` is set to `true`
+3. Check that your frontend is sending credentials with requests
+
+### Authentication Issues
+
+If authentication is not working properly:
+
+1. Ensure the Sanctum middleware is properly set up in your routes file
+2. Check that your frontend is sending the CSRF token with requests
+3. Verify that cookies are being properly set and sent
