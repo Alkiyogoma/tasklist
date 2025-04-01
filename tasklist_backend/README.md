@@ -44,18 +44,17 @@ This application follows the MVC (Model-View-Controller) architecture with addit
     - `id` - Primary key
     - `name` - Property name
     - `address` - Property address
-    - `type` - Property type (apartment, house, commercial, etc.)
+    - `type` - Property type (residential, commercial, etc.)
     - `created_at` - Timestamp for record creation
     - `updated_at` - Timestamp for record updates
 
 3. **utility_bills**
     - `id` - Primary key
     - `property_id` - Foreign key to properties table
-    - `bill_type` - Type of utility (water, electricity, gas, internet, etc.)
+    - `type` - Type of utility (water, electricity, gas, etc.)
     - `amount` - Bill amount
     - `bill_date` - Date the bill was issued
-        - `user_id` - Foreign key to users table (current user, nullable)
-    - `paid_date` - Date the bill was paid (nullable)
+    - `user_id` - Foreign key to users table (current user)
     - `created_at` - Timestamp for record creation
     - `updated_at` - Timestamp for record updates
 
@@ -235,6 +234,7 @@ This application follows the MVC (Model-View-Controller) architecture with addit
 -   Add reporting and analytics features
 -   Implement file uploads for property images and documents
 -   Add maintenance request functionality
+-   User role and permissions to define who can perform what actions on which resources
 
 ## Troubleshooting
 

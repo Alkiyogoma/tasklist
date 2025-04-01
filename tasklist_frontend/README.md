@@ -1,43 +1,96 @@
+# Properties Management App - Frontend Documentation
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
 
 # Property Management Dashboard
 
-A responsive Next.js and TailwindCSS dashboard for property management with utility bill tracking.
+## Overview
 
-## Features
-
-- **Properties List/Overview**: View all properties with name, address, and type (residential/commercial)
-- **Individual Property Details**: View property information and utility bills
-- **Utility Bill Entry Form**: Add new utility bills with validation
-- **Dashboard**: View statistics and charts for property and utility data
+This repository contains the Next.js frontend for the Properties Management application. The frontend provides a user-friendly interface to manage properties and utility bills, connecting to a Laravel backend API.
 
 ## Tech Stack
 
-- **Frontend**: Next.js, TailwindCSS, Recharts
-- **Backend**: Laravel PHP API (not included in this repository)
+- **Frontend Framework**: Next.js (React)
+- **Styling**: TailwindCSS
+- **State Management**: React Context API / React Query
 - **API Communication**: Axios
+- **Form Handling**: React Hook Form
+- **Validation**: Yup
+- **Charts**: Recharts
+- **Date Handling**: date-fns
+
+## Features
+
+### Authentication
+
+- User registration and login
+- Protected routes for authenticated users
+- Token-based authentication with Laravel Sanctum
+
+### Properties Management
+
+- **Properties List/Overview**:
+
+  - Responsive grid/list view of all properties
+  - Quick view of property name, address, and type
+  - Filtering and sorting options
+  - Add new property button
+
+- **Individual Property Details**:
+  - Comprehensive view of property information
+  - Utility bills listing
+  - Edit property information
+  - Navigation to add new utility bills
+
+### Utility Bills Management
+
+- **Utility Bills List**:
+
+  - List of all utility bills for a selected property
+  - Display of bill type, amount, and date
+  - Sorting and filtering options
+
+- **Utility Bill Entry Form**:
+  - Form to add new utility bills
+  - Property selection from dropdown
+  - Utility type selection (electricity, water, gas)
+  - Amount input with validation
+  - Date selection with date picker
+
+### Data Visualization (Bonus)
+
+- **Utility Consumption Charts**:
+  - Historical visualization of utility usage
+  - Monthly comparison charts
+  - Trend analysis
+
+## Project Structure
+
+```
+properties-management-frontend/
+├── public/                  # Static assets
+├── src/
+│   ├── components/          # Reusable React components
+│   │   ├── layout/          # Layout components
+│   │   ├── charts/          # Chart components
+│   │   ├── forms/           # Form components
+│   │   └── ui/              # UI components (buttons, cards, etc.)
+│   ├── context/             # React Context for state management
+│   ├── hooks/               # Custom React hooks
+│   ├── lib/                 # Library code and utilities
+│   │   ├── api.js           # API client setup
+│   │   └── auth.js          # login validation schemas
+│   ├── pages/               # Next.js pages
+│   │   ├── _app.js          # Custom App component
+│   │   ├── index.js         # Home page
+│   │   ├── login.js         # Login page
+│   │   ├── register.js      # Registration page
+│   │   ├── properties/      # Property-related pages
+│   │   └── utility-bills/   # Utility bill pages
+│   │   ├── users/           # staff users pages
+│   └── styles/              # Global styles and Tailwind config
+└── next.config.js           # Next.js configuration
+```
 
 ## Prerequisites
 
@@ -50,8 +103,8 @@ A responsive Next.js and TailwindCSS dashboard for property management with util
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/property-management-dashboard.git
-   cd property-management-dashboard
+   git clone https://github.com/your-username/tasklist.git
+   cd tasklist\tasklist_frontend
    ```
 
 2. Install dependencies:
@@ -66,6 +119,7 @@ A responsive Next.js and TailwindCSS dashboard for property management with util
 
    ```
    NEXT_PUBLIC_API_URL=http://localhost:8000/api
+   NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
    ```
 
 4. Start the development server:
@@ -99,17 +153,6 @@ This frontend application requires a Laravel PHP backend with the following API 
 - `DELETE /api/utility-bills/{id}` - Delete a utility bill
 - `GET /api/properties/{id}/consumption-history` - Get consumption history for a property
 
-## Project Structure
-
-- `/pages` - Next.js pages
-  - `/dashboard` - Main dashboard
-  - `/properties` - Properties list and details
-  - `/utility-bills` - Utility bill forms
-- `/components` - Reusable React components
-  - `/layout` - Layout components (Sidebar, Navbar)
-- `/services` - API services
-- `/public` - Static assets
-
 ## Development
 
 ### Adding New Features
@@ -120,10 +163,30 @@ This frontend application requires a Laravel PHP backend with the following API 
 
 ### Building for Production
 
+Start the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+Open your browser and visit `http://localhost:3000`
+
+### Building for Production
+
 ```bash
 npm run build
 # or
 yarn build
+```
+
+To start the production server:
+
+```bash
+npm run start
+# or
+yarn start
 ```
 
 ## License
