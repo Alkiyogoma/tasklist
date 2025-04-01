@@ -33,7 +33,6 @@ export default function PropertyDetails() {
                 console.log('Consumption API response:', response);
 
                 // Extract the consumption array from the response
-                // Adjust this based on your actual API response structure
                 const consumptionHistory = response.data?.consumption || [];
                 console.log('Extracted consumption data:', consumptionHistory);
 
@@ -55,7 +54,6 @@ export default function PropertyDetails() {
             const response = await utilityBillService.getConsumptionHistory(id, type);
 
             // Extract the consumption array from the response
-            // Adjust this based on your actual API response structure
             const consumptionHistory = response.data?.consumption || [];
             setConsumptionData(consumptionHistory);
         } catch (err) {

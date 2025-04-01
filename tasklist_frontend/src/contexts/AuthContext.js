@@ -81,7 +81,7 @@ export function AuthProvider({ children }) {
             router.push('/login');
         } catch (err) {
             console.log('Logout error:', err);
-            // Even if API logout fails, clear local state
+            // if API logout fails, clear local state
             setUser(null);
             router.push('/login');
         }
@@ -91,7 +91,7 @@ export function AuthProvider({ children }) {
     const updateProfile = async (userData) => {
         setError(null);
         try {
-            // Call API to update profile (to be implemented in your API service)
+            // Call API to update profile (to be implemented in our API service)
             const updatedUser = await apiClient.put('/user', userData);
 
             // Update local state and storage

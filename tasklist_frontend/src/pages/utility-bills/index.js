@@ -136,7 +136,7 @@ export default function UtilityBillsData() {
                     </div>
 
                     {/* Filter and Search Controls */}
-                    <div className="mb-6 flex flex-col sm:flex-row gap-4">
+                    <div className="p-4 flex flex-col sm:flex-row gap-4">
                         <div className="flex items-center">
                             <label htmlFor="filterType" className="mr-2 text-gray-700">Filter by bill type:</label>
                             <select
@@ -157,7 +157,7 @@ export default function UtilityBillsData() {
                             <FireIcon className="absolute left-3 h-4 w-4 text-gray-400" />
                             <input
                                 type="text"
-                                placeholder="Search properties..."
+                                placeholder="Search utility bills..."
                                 name="search"
                                 value={formData.search}
                                 onChange={handleFilterChange}
